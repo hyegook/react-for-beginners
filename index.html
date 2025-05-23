@@ -8,6 +8,8 @@
 <script src="https://www.unpkg.com/react@17.0.2/umd/react.development.js"></script>
 <!-- React DOM (Element 를 HTML 로 바꿈)-->
 <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js"></script>
+<!-- prop 타입 알려주는 js-->
+<script src="https://unpkg.com/prop-types@15.7.2/prop-types.js"></script>
 <!-- 브라우저가 JSX 코드를 이해할 수 있도록 babel 추가 -->
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 <!-- JSX 코드가 있는 스크립트에 type이 babel 임을 명시 -->
@@ -16,27 +18,29 @@
     // React 컴포넌트의 첫글자는 대문자로 작성해야함
     // 만약 소문자로 작성시 html 태그로 인식함
 
-    function Btn({ text, changeValue }) {
-        console.log("test2");
+    function Btn({ text, fontSize = 12 }) {
+
         return <button style={{
             backgroundColor: "tomato",
             color: "white",
             padding: "10px 20px",
             border: 0,
             borderRadius: 10,
+            fontSize,
         }}
-            onClick={changeValue}
         >
             {text}
         </button>;
     }
+    Btn.propTypes = {
+        text: PropTypes.string.isRequired,
+        fontSize: PropTypes.number,
+    }
     function App() {
-        const [value, setValue] = React.useState("Save Changes");
-        const changeValue = () => setValue("Revert Changes");
         return (
             <div>
-                <Btn text={value} changeValue={changeValue} />
-                <Btn text="Continue" />
+                <Btn text="Save Changes" fontSize={18} />
+                <Btn text={"Continue"} />
             </div>
         );
     }
